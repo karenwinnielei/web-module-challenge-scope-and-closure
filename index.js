@@ -135,24 +135,19 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function numberToOrdinal(n) {
-  var j = n % 10;
-       k = n % 100;
- 
-   if (j == 0 && n == 0) {
-       return 0;
- }
- 
-   if (j == n && k != 11) {
-       return n + "st";
-   }
-   if (j == 2 && k != 12) {
-       return n + "nd";
-   }
-   if (j == 3 && k != 13) {
-       return n + "rd";
-   }
-   return n + "th";
+function ordinal_suffix_of(i) {
+  var j = i % 10,
+      k = i % 100;
+  if (j == 1 && k != 11) {
+      return i + "st";
+  }
+  if (j == 2 && k != 12) {
+      return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+      return i + "rd";
+  }
+  return i + "th";
 }
 function scoreboard(callback, num){
   let finalScore = {
@@ -162,13 +157,13 @@ function scoreboard(callback, num){
   for(let i = 0; i < num; i++){
     // if(i % 2 === 0){
       finalScore.Home = finalScore.Home += callback();
-      console.log(`${numberToOrdinal(i)} inning: ${finalScore.Away} - ${finalScore.Home}`);
+      console.log(`${ordinal_suffix_of(i+1)} inning: ${finalScore.Away} - ${finalScore.Home}`);
       finalScore.Away = finalScore.Away += callback();
     // }
   }
-  return finalScore;
+  console.log(`Final Score: ${finalScore.Away} - ${finalScore.Home}`);
 }
-console.log(scoreboard(inning, 5));
+scoreboard(inning, 9);
 
 
 
