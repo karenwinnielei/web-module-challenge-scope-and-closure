@@ -28,9 +28,17 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * counter 1 has the variable count within the function, while counter 2 has it ouside the function
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ * counter 1 uses a closure because it has a child function nested inside the parent function
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * 
+ * counter1 code would be preferable if you wanted to create multiple private variables that could use the counter and have a counter that accumulates.
+ * 
+ * counter2 would be better if you wanted to reset at 0 every time.
  *
 */
 
@@ -38,7 +46,7 @@ function processFirstItem(stringList, callback) {
 function counterMaker() {
   let count = 0;
   return function counter() {
-    count++;
+    return count++;
   }
 }
 
@@ -51,16 +59,16 @@ function counter2() {
   return count++;
 }
 
-
 /* Task 2: inning() 
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+  return Math.floor(Math.random() * 2);
 
 }
+console.log(inning());
 
 /* Task 3: finalScore()
 
