@@ -65,7 +65,7 @@ Write a function called `inning` that generates a random number of points that a
 
 function inning(){
 
-  return Math.floor(Math.random() * 2);
+  return Math.floor(Math.random() * 3);
 
 }
 console.log(inning());
