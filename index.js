@@ -28,9 +28,17 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * counter 1 has the variable count within the function, while counter 2 has it ouside the function
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ * counter 1 uses a closure because it has a child function nested inside the parent function
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * 
+ * counter1 code would be preferable if you wanted to create multiple private variables that could use the counter and have a counter that accumulates.
+ * 
+ * counter2 would be better if you wanted to reset at 0 every time.
  *
 */
 
@@ -38,7 +46,7 @@ function processFirstItem(stringList, callback) {
 function counterMaker() {
   let count = 0;
   return function counter() {
-    count++;
+    return count++;
   }
 }
 
@@ -51,16 +59,16 @@ function counter2() {
   return count++;
 }
 
-
 /* Task 2: inning() 
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+  return Math.floor(Math.random() * 3);
 
 }
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -76,11 +84,34 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+// function finalScore(inning, number){
+//   for(let i = 0; i < number; i++)
+//   let homeScore = inning() * Math.round(Math.random()*number);
+//   let awayScore = inning() * Math.round(Math.random()*number);
+//   let score = {
+//     "Home": `${homeScore}`,
+//     "Away": `${awayScore}`,
+//   }
+//   return score;
+// }  
+// console.log(finalScore(inning, 9));
 
-  /*Code Here*/
-
+function finalScore(cb, number){
+  let finalScore = {
+    "Home": 0,
+    "Away": 0,
+  }
+  for(let i = 0; i < number; i++){
+    // if(i % 2 === 0){
+      finalScore.Home = finalScore.Home += cb();
+    // }else{
+      finalScore.Away = finalScore.Away += cb();
+      console.log(finalScore.Away);
+    // }
+  }
+  return finalScore;
 }
+console.log(finalScore(inning, 5));
 
 /* Task 4: 
 
@@ -104,8 +135,32 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function ordinal_suffix_of(i) {
+  var j = i % 10,
+      k = i % 100;
+  if (j == 1 && k != 11) {
+      return i + "st";
+  }
+  if (j == 2 && k != 12) {
+      return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+      return i + "rd";
+  }
+  return i + "th";
 }
-
-
+function scoreboard(callback, num){
+  let finalScore = {
+    "Home": 0,
+    "Away": 0,
+  }
+  for(let i = 0; i < num; i++){
+    // if(i % 2 === 0){
+      finalScore.Home = finalScore.Home += callback();
+      console.log(`${ordinal_suffix_of(i+1)} inning: ${finalScore.Away} - ${finalScore.Home}`);
+      finalScore.Away = finalScore.Away += callback();
+    // }
+  }
+  console.log(`Final Score: ${finalScore.Away} - ${finalScore.Home}`);
+}
+scoreboard(inning, 9);
